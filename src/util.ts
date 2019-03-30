@@ -33,7 +33,9 @@ export const appendToFileInRemoteGitRepository = async ({
 
   // Guard against potentially malicious GIT_FILE_PATH
   if (
-    path.relative(repositoryDirectory, resolvedGitFilePath).startsWith("..")
+    path
+      .relative(repositoryDirectory, resolvedGitFilePath)
+      .startsWith(`..${path.sep}`)
   ) {
     throw new Error("Provided GIT_FILE_PATH is outside the repository");
   }

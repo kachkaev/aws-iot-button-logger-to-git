@@ -66,7 +66,10 @@ const createTemporaryRepository = async ({
     await runGitCommand(["rm", "-rf", "."]);
   }
 
-  return { repositoryPath, runGitCommand };
+  return {
+    repositoryPath,
+    runGitCommand,
+  };
 };
 
 describe("handler()", () => {
@@ -104,11 +107,10 @@ describe("handler()", () => {
       },
     });
     process.env.GIT_REPO_URI = repositoryPath;
-    process.env.GIT_FILE_PATH = "~/.ssh/id_rsa";
+    process.env.GIT_FILE_PATH = "../foo/bar";
     await expect(handler(...generateHandlerArgs())).rejects.toThrow();
-    process.env.GIT_FILE_PATH = "/absolute/path";
-    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
-    process.env.GIT_FILE_PATH = "C:\\absolute\\path";
+    process.env.GIT_FILE_PATH =
+      os.type() === "Windows_NT" ? "C:\\absolute\\path" : "/absolute/path";
     await expect(handler(...generateHandlerArgs())).rejects.toThrow();
   });
 
@@ -119,23 +121,32 @@ describe("handler()", () => {
     expect(handler(...generateHandlerArgs())).rejects.toThrow();
   });
 
-  it("works for a non-empty repository that does not contain the file to write", async () => {
-    const { repositoryPath, runGitCommand } = await createTemporaryRepository({
-      filesByPath: {
-        "README.md": "hello world",
-      },
+  [
+    "clicks.txt",
+    "path/to/subfolder/file.txt",
+    "~log.csv",
+    "~/.ssh/id_rsa.pub",
+  ].forEach((filePath) => {
+    it(`works for a non-empty repository that does not contain the file to write (${filePath})`, async () => {
+      const { repositoryPath, runGitCommand } = await createTemporaryRepository(
+        {
+          filesByPath: {
+            "README.md": "hello world",
+          },
+        },
+      );
+      process.env.GIT_REPO_URI = repositoryPath;
+      process.env.GIT_FILE_PATH = filePath;
+      await handler(...generateHandlerArgs());
+      await runGitCommand(["checkout", "master"]);
+      const fileContents = await fs.readFile(
+        path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
+        "utf8",
+      );
+      expect(fileContents).toMatch(
+        /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n$/,
+      );
     });
-    process.env.GIT_REPO_URI = repositoryPath;
-    process.env.GIT_FILE_PATH = "clicks.txt";
-    await handler(...generateHandlerArgs());
-    await runGitCommand(["checkout", "master"]);
-    const fileContents = await fs.readFile(
-      path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
-      "utf8",
-    );
-    expect(fileContents).toMatch(
-      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n$/,
-    );
   });
 
   it("works for a non-empty repository that already contains the file to write", async () => {
