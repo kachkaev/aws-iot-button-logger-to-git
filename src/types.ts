@@ -8,8 +8,6 @@ export type Config = Readonly<{
   GIT_REPO_URI: string;
   GIT_REPO_BRANCH: string;
   GIT_FILE_PATH: string;
-  GIT_PRIVATE_KEY: string;
-  GIT_PUBLIC_KEY: string;
   GIT_COMMIT_USER_NAME: string;
   GIT_COMMIT_USER_EMAIL: string;
   GIT_COMMIT_MESSAGE: string;

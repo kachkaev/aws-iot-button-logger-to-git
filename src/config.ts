@@ -28,8 +28,8 @@ export const envValidators = {
   }),
 
   GIT_REPO_URI: envalid.str({
-    desc: "Git repository URI",
-    example: "git@github.com:example/my-data.git",
+    desc: "Git repository URI (must include authentication)",
+    example: "https://username:token@github.com/example/my-data.git",
   }),
   GIT_REPO_BRANCH: envalid.str({
     desc: "Branch to change",
@@ -39,13 +39,6 @@ export const envValidators = {
   GIT_FILE_PATH: envalid.str({
     desc: "Path to the log file in the git repo",
     example: "clicks.txt",
-  }),
-
-  GIT_PRIVATE_KEY: envalid.str({
-    desc: "Private key of a user that clones / pushes",
-  }),
-  GIT_PUBLIC_KEY: envalid.str({
-    desc: "Public key of a user that clones / pushes",
   }),
 
   GIT_COMMIT_USER_NAME: envalid.str({
