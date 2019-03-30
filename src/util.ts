@@ -43,7 +43,7 @@ export const appendToFileInRemoteGitRepository = async ({
   let commandPath: string = process.env.PATH;
   try {
     // Ensure git binary is available inside AWS Lambda
-    // Also test custom git on Linux
+    // Also test this custom git binary when on Linux
     if (process.env.AWS_LAMBDA_FUNCTION_NAME || os.type() === "Linux") {
       await require("lambda-git")({
         targetDirectory: handlerDirectory,
@@ -58,8 +58,9 @@ export const appendToFileInRemoteGitRepository = async ({
     // Make git commands easier to run
     const runGitCommand = async (args: string[]) => {
       await execa("git", args, {
-        cwd: args[0] !== "clone" ? repositoryDirectory : undefined,
+        ...(args[0] !== "clone" && { repositoryDirectory: undefined }),
         env: {
+          COMSPEC: process.env.COMSPEC, // https://en.wikipedia.org/wiki/COMSPEC
           GIT_AUTHOR_NAME: config.GIT_COMMIT_USER_NAME,
           GIT_AUTHOR_EMAIL: config.GIT_COMMIT_USER_EMAIL,
           GIT_COMMITTER_NAME: config.GIT_COMMIT_USER_NAME,
@@ -68,6 +69,7 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_TERMINAL_PROMPT: "false",
           PATH: commandPath,
         },
+        extendEnv: false,
       });
     };
 
