@@ -42,16 +42,19 @@ export const envValidators = {
   }),
 
   GIT_COMMIT_MESSAGE: envalid.str({
+    desc: "Description of the new commit",
     default: "Log IoT button click",
   }),
   GIT_COMMIT_TIME_ZONE: envalid.str({
-    desc: "Time zone to use when making commits events",
+    desc: "Time zone to use when committing",
     default: "UTC",
   }),
   GIT_COMMIT_USER_NAME: envalid.str({
+    desc: "Name associated with the new commit",
     default: "IoT Button click handler",
   }),
   GIT_COMMIT_USER_EMAIL: envalid.str({
+    desc: "Email associated with the new commit",
     default: "https://github.com/kachkaev/aws-iot-button-logger-to-git",
   }),
 };

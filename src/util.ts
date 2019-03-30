@@ -55,8 +55,12 @@ export const appendToFileInRemoteGitRepository = async ({
         cwd: args[0] !== "clone" ? repositoryDirectory : undefined,
         // ...(args[0] !== "clone" && { cwd: repositoryDirectory }),
         env: {
-          // Do not use global git config
-          GIT_CONFIG: path.resolve(repositoryDirectory, ".git/config"),
+          GIT_COMMIT_AUTHOR_NAME: config.GIT_COMMIT_USER_NAME,
+          GIT_COMMIT_AUTHOR_EMAIL: config.GIT_COMMIT_USER_EMAIL,
+          GIT_COMMIT_COMMITTER_NAME: config.GIT_COMMIT_USER_NAME,
+          GIT_COMMIT_COMMITTER_EMAIL: config.GIT_COMMIT_USER_EMAIL,
+          GIT_CONFIG_NOSYSTEM: "true",
+          GIT_TERMINAL_PROMPT: "false",
           PATH: gitPath,
         },
         extendEnv: false,
@@ -86,8 +90,6 @@ export const appendToFileInRemoteGitRepository = async ({
       "commit",
       "--no-sign",
       "--no-verify",
-      "--author",
-      `${config.GIT_COMMIT_USER_NAME} <${config.GIT_COMMIT_USER_EMAIL}>`,
       "--date",
       DateTime.utc()
         .setZone(config.GIT_COMMIT_TIME_ZONE)

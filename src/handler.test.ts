@@ -37,6 +37,14 @@ const createTemporaryRepository = async ({
   const runGitCommand = async (args: string[]) => {
     await execa("git", args, {
       cwd: repositoryPath,
+      env: {
+        GIT_CONFIG_NOSYSTEM: "true",
+        GIT_COMMIT_AUTHOR_NAME: "Test",
+        GIT_COMMIT_AUTHOR_EMAIL: "test@example.com",
+        GIT_COMMIT_COMMITTER_NAME: "Test",
+        GIT_COMMIT_COMMITTER_EMAIL: "test@example.com",
+        GIT_TERMINAL_PROMPT: "false",
+      },
     });
   };
 
@@ -51,13 +59,7 @@ const createTemporaryRepository = async ({
     });
 
     await runGitCommand(["add", "--all"]);
-    await runGitCommand([
-      "commit",
-      "--author",
-      "Test <test@example.com>",
-      "--message",
-      "Initial commit",
-    ]);
+    await runGitCommand(["commit", "--message", "Initial commit"]);
 
     // Make it possible to later push to the branch without setting receive.denyCurrentBranch=ignore
     await runGitCommand(["checkout", "--orphan", "orphan-branch"]);
