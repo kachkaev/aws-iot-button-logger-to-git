@@ -21,7 +21,7 @@ See [src/config.ts](src/config.ts) for the details on what is available.
 ### Using a pre-built version from GitHub
 
 ```
-aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://build.zip
+aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://TODO.zip
 ```
 
 ### Using your own build
@@ -37,7 +37,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
 
 ### Getting started
 
-1.  Ensure you have the latest git, Node.js and Yarn installed
+1.  Ensure you have the latest git, Node.js and Yarn installed:
 
     ```bash
     git --version
@@ -50,7 +50,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
     ## ≥ 1.10
     ```
 
-1.  Clone the repo
+1.  Clone the repository:
 
     ```bash
     cd PATH/TO/MISC/PROJECTS
@@ -58,7 +58,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
     cd aws-iot-button-logger-to-git
     ```
 
-1.  Install dependencies using Yarn
+1.  Install dependencies using Yarn:
 
     ```bash
     yarn install
@@ -66,21 +66,21 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
 
 ### Simulating the Lambda function locally
 
-Create a file called `.env` in the root of the project and define the configuration there:
+1.  Create a file called `.env` in the root of the project and define the configuration there:
 
-```bash
-GIT_REPO_URI=https://username:token@github.com/example/my-data.git
-GIT_FILE_PATH=clicks.txt
-```
+    ```bash
+    GIT_REPO_URI=https://username:token@github.com/example/my-data.git
+    GIT_FILE_PATH=clicks.txt
+    ```
 
-You can add other configuration options if you wish, see [src/config.ts](src/config.ts) for s full list of what is available.
-In addition to these, you can also set `CLICK_TYPE` (= `SINGLE`, `DOUBLE`, `LONG`) to simulate different button click types.
+    You can add other configuration options if you wish, see [src/config.ts](src/config.ts) for s full list of what is available.
+    In addition to these, you can also set `CLICK_TYPE` (= `SINGLE`, `DOUBLE`, `LONG`) to simulate different button click types.
 
-Once `.env` file configured, you can finally the Lambda function simulation:
+1.  Once `.env` file configured, you can finally the Lambda function simulation:
 
-```bash
-yarn simulate
-```
+    ```bash
+    yarn simulate
+    ```
 
 Alternatively, you can define the configuration inline, which makes `.env` unnecessary.
 Please note that this trick will not work in cmd.exe and PowerShell on Windows.
@@ -94,14 +94,14 @@ yarn simulate
 
 ### Quality checking
 
-Ensuring that there are no TypeScript errors and that the code is correctly formatted:
+1.  Ensure that there are no TypeScript errors and that the code is correctly formatted:
 
-```bash
-yarn lint
-```
+    ```bash
+    yarn lint
+    ```
 
-Ensuring that unit tests pass:
+1.  Ensure that unit tests pass:
 
-```bash
-yarn test
-```
+    ```bash
+    yarn test
+    ```
