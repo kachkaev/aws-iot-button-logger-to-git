@@ -68,7 +68,6 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_TERMINAL_PROMPT: "false",
           PATH: commandPath,
         },
-        extendEnv: false,
       });
     };
 
