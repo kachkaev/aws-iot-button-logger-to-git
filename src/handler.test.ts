@@ -113,13 +113,11 @@ describe("handler()", () => {
     os.type() === "Windows_NT" ? "C:\\absolute\\path" : "/absolute/path",
   ].forEach((filePath) => {
     it(`throws when file path is malicious (${filePath})`, async () => {
-      const { repositoryPath, runGitCommand } = await createTemporaryRepository(
-        {
-          filesByPath: {
-            "README.md": "hello world",
-          },
+      const { repositoryPath } = await createTemporaryRepository({
+        filesByPath: {
+          "README.md": "hello world",
         },
-      );
+      });
       process.env.GIT_REPO_URI = repositoryPath;
       process.env.GIT_FILE_PATH = filePath;
       await expect(handler(...generateHandlerArgs())).rejects.toThrow();
