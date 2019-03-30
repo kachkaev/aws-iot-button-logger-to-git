@@ -58,7 +58,7 @@ export const appendToFileInRemoteGitRepository = async ({
     // Make git commands easier to run
     const runGitCommand = async (args: string[]) => {
       await execa("git", args, {
-        ...(args[0] !== "clone" && { repositoryDirectory: undefined }),
+        cwd: args[0] !== "clone" ? repositoryDirectory : undefined,
         env: {
           COMSPEC: process.env.COMSPEC, // https://en.wikipedia.org/wiki/COMSPEC
           GIT_AUTHOR_NAME: config.GIT_COMMIT_USER_NAME,
