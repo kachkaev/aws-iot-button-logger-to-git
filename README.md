@@ -1,4 +1,8 @@
-# AWS IoT Button logger to git (work in progress)
+# AWS IoT Button logger to git
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Azure Pipelines status](https://img.shields.io/azure-devops/build/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1) [![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json) [![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
+
+> Work in progress
 
 This repository contains a [Lambda function](https://aws.amazon.com/lambda/) that can be triggered by an [AWS IoT Button](https://aws.amazon.com/iotbutton/) to log clicks to a chosen git repository.
 Doing so is useful when you want to record arbitrary infrequent events over a long period of time and then analyze them.
