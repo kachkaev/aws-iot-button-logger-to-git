@@ -37,23 +37,22 @@ export const envValidators = {
   }),
 
   GIT_FILE_PATH: envalid.str({
-    desc: "Path to the log file in the git repo",
+    desc: "Path to the log file inside the git repository",
     example: "clicks.txt",
   }),
 
+  GIT_COMMIT_MESSAGE: envalid.str({
+    default: "Log IoT button click",
+  }),
+  GIT_COMMIT_TIME_ZONE: envalid.str({
+    desc: "Time zone to use when making commits events",
+    default: "UTC",
+  }),
   GIT_COMMIT_USER_NAME: envalid.str({
     default: "IoT Button click handler",
   }),
   GIT_COMMIT_USER_EMAIL: envalid.str({
     default: "https://github.com/kachkaev/aws-iot-button-logger-to-git",
-  }),
-  GIT_COMMIT_MESSAGE: envalid.str({
-    default: "Log IoT button click",
-  }),
-  GIT_COMMIT_UTC_OFFSET: envalid.num({
-    default: 0,
-    desc:
-      "A UTC offset (minutes or hours) applied to the timestamp in the commit message (0 = UTC)",
   }),
 };
 

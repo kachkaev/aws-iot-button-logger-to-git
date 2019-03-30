@@ -11,10 +11,10 @@ export type Config = Readonly<{
 
   GIT_FILE_PATH: string;
 
+  GIT_COMMIT_MESSAGE: string;
+  GIT_COMMIT_TIME_ZONE: string;
   GIT_COMMIT_USER_NAME: string;
   GIT_COMMIT_USER_EMAIL: string;
-  GIT_COMMIT_MESSAGE: string;
-  GIT_COMMIT_UTC_OFFSET: number;
 }>;
 
 export type IotButtonClickType = "SINGLE" | "DOUBLE" | "LONG";
