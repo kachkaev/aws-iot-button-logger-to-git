@@ -19,16 +19,16 @@
     "@types/jest": "^24.0.11",
     "envalid": "^4.2.2",
     "fs-extra": "^7.0.1",
-    "luxon": "^1.12.0",
-    "nodegit": "^0.24.1"
+    "lambda-git": "^0.1.2",
+    "luxon": "^1.12.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/aws-lambda": "^8.10.23",
     "@types/fs-extra": "^5.0.5",
     "@types/luxon": "^1.11.1",
     "@types/node": "^11.12.2",
-    "@types/nodegit": "^0.24.6",
     "aws-lambda": "^0.1.2",
     "jest": "^24.5.0",
     "jest-junit": "^6.3.0",
