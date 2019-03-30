@@ -1,6 +1,10 @@
 {
   "author": "Alexander Kachkaev <alexander@kachkaev.ru>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0",
+    "yarn": ">=1.10.0"
+  },
   "scripts": {
     "build": "rimraf build && yarn parcel build src/handler.ts --target=node --out-dir=build --global handler -o handler.js --bundle-node-modules --no-source-maps",
     "fix": "yarn lint:prettier",
