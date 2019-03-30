@@ -2,13 +2,32 @@
   "author": "Alexander Kachkaev <alexander@kachkaev.ru>",
   "license": "MIT",
   "scripts": {
+    "build": "rimraf build && yarn parcel build src/handler.ts --target=node --out-dir=build --global handler -o handler.js --bundle-node-modules --no-source-maps",
+    "deploy": "yarn lint && yarn build && aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://build.zip",
     "fix": "yarn lint:prettier",
     "fix:prettier": "prettier --write \"**/*.{js,json,md,ts}\"",
-    "lint": "yarn lint:prettier",
-    "lint:prettier": "prettier --check \"**/*.{js,json,md,ts}\""
+    "lint": "yarn lint:prettier && yarn lint:tsc",
+    "lint:prettier": "prettier --check \"**/*.{js,json,md,ts}\"",
+    "lint:tsc": "tsc --noEmit",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.11",
+    "envalid": "^4.2.2",
+    "nodegit": "^0.24.1"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/aws-lambda": "^8.10.23",
+    "@types/node": "^11.12.2",
+    "@types/nodegit": "^0.24.6",
+    "aws-lambda": "^0.1.2",
+    "jest": "^24.5.0",
+    "parcel": "^1.12.3",
+    "parcel-plugin-zip": "^1.0.6",
     "prettier": "^1.16.4",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.0.3",
     "typescript": "^3.4.1"
   }
 }
