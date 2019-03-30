@@ -60,7 +60,6 @@ export const appendToFileInRemoteGitRepository = async ({
       await execa("git", args, {
         cwd: args[0] !== "clone" ? repositoryDirectory : undefined,
         env: {
-          COMSPEC: process.env.COMSPEC, // https://en.wikipedia.org/wiki/COMSPEC
           GIT_AUTHOR_NAME: config.GIT_COMMIT_USER_NAME,
           GIT_AUTHOR_EMAIL: config.GIT_COMMIT_USER_EMAIL,
           GIT_COMMITTER_NAME: config.GIT_COMMIT_USER_NAME,
@@ -68,6 +67,9 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_CONFIG_NOSYSTEM: "true",
           GIT_TERMINAL_PROMPT: "false",
           PATH: commandPath,
+          // https://en.wikipedia.org/wiki/COMSPEC
+          ComSpec:
+            process.env.ComSpec || process.env.COMSPEC || process.env.comspec,
         },
         extendEnv: false,
       });
