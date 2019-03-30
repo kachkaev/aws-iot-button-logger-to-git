@@ -100,25 +100,30 @@ describe("handler()", () => {
     expect(handler(...generateHandlerArgs())).rejects.toThrow();
   });
 
-  it("throws when file path is malicious", async () => {
-    const { repositoryPath } = await createTemporaryRepository({
-      filesByPath: {
-        "README.md": "hello world",
-      },
-    });
-    process.env.GIT_REPO_URI = repositoryPath;
-    process.env.GIT_FILE_PATH = "../foo/bar";
-    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
-    process.env.GIT_FILE_PATH =
-      os.type() === "Windows_NT" ? "C:\\absolute\\path" : "/absolute/path";
-    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
-  });
-
   it("throws for an empty repository (branch does not exist)", async () => {
     const { repositoryPath } = await createTemporaryRepository();
     process.env.GIT_REPO_URI = repositoryPath;
     process.env.GIT_FILE_PATH = "clicks.txt";
     expect(handler(...generateHandlerArgs())).rejects.toThrow();
+  });
+
+  [
+    "../foo/bar",
+    `..${path.sep}..${path.sep}foobar`,
+    os.type() === "Windows_NT" ? "C:\\absolute\\path" : "/absolute/path",
+  ].forEach((filePath) => {
+    it(`throws when file path is malicious (${filePath})`, async () => {
+      const { repositoryPath, runGitCommand } = await createTemporaryRepository(
+        {
+          filesByPath: {
+            "README.md": "hello world",
+          },
+        },
+      );
+      process.env.GIT_REPO_URI = repositoryPath;
+      process.env.GIT_FILE_PATH = filePath;
+      await expect(handler(...generateHandlerArgs())).rejects.toThrow();
+    });
   });
 
   [
