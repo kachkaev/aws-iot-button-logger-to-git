@@ -40,7 +40,7 @@ export const appendToFileInRemoteGitRepository = async ({
     throw new Error("Provided GIT_FILE_PATH is outside the repository");
   }
 
-  let gitPath: string = process.env.PATH;
+  let commandPath: string = process.env.PATH;
   try {
     // Ensure git binary is available inside AWS Lambda
     // Also test custom git on Linux
@@ -49,14 +49,16 @@ export const appendToFileInRemoteGitRepository = async ({
         targetDirectory: handlerDirectory,
         updateEnv: false,
       });
-      gitPath = path.resolve(handlerDirectory, "usr/libexec/git-core");
+      commandPath = `${path.resolve(
+        handlerDirectory,
+        "usr/libexec/git-core",
+      )};${commandPath}`;
     }
 
     // Make git commands easier to run
     const runGitCommand = async (args: string[]) => {
       await execa("git", args, {
         cwd: args[0] !== "clone" ? repositoryDirectory : undefined,
-        // ...(args[0] !== "clone" && { cwd: repositoryDirectory }),
         env: {
           GIT_AUTHOR_NAME: config.GIT_COMMIT_USER_NAME,
           GIT_AUTHOR_EMAIL: config.GIT_COMMIT_USER_EMAIL,
@@ -64,7 +66,7 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_COMMITTER_EMAIL: config.GIT_COMMIT_USER_EMAIL,
           GIT_CONFIG_NOSYSTEM: "true",
           GIT_TERMINAL_PROMPT: "false",
-          PATH: gitPath,
+          PATH: commandPath,
         },
         extendEnv: false,
       });
