@@ -3,22 +3,26 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf build && yarn parcel build src/handler.ts --target=node --out-dir=build --global handler -o handler.js --bundle-node-modules --no-source-maps",
-    "deploy": "yarn lint && yarn build && aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://build.zip",
     "fix": "yarn lint:prettier",
     "fix:prettier": "prettier --write \"**/*.{js,json,md,ts}\"",
     "lint": "yarn lint:prettier && yarn lint:tsc",
     "lint:prettier": "prettier --check \"**/*.{js,json,md,ts}\"",
     "lint:tsc": "tsc --noEmit",
+    "simulate": "ts-node src/simulate.ts",
     "test": "jest"
   },
   "dependencies": {
     "@types/jest": "^24.0.11",
     "envalid": "^4.2.2",
+    "fs-extra": "^7.0.1",
+    "luxon": "^1.12.0",
     "nodegit": "^0.24.1"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.3.3",
     "@types/aws-lambda": "^8.10.23",
+    "@types/fs-extra": "^5.0.5",
+    "@types/luxon": "^1.11.1",
     "@types/node": "^11.12.2",
     "@types/nodegit": "^0.24.6",
     "aws-lambda": "^0.1.2",

@@ -1,5 +1,6 @@
-import { handler, IotButtonClickType, IotButtonClickEvent } from "./handler";
+import { handler } from "./handler";
 import { Context } from "aws-lambda";
+import { IotButtonClickType, IotButtonClickEvent } from "./types";
 
 const generateHandlerArgs = (clickType: IotButtonClickType = "SINGLE") =>
   [
@@ -29,6 +30,7 @@ describe("handler()", () => {
 
   it("works for valid env variables", async () => {
     process.env.GIT_REPO_URI = "stub";
+    process.env.GIT_FILE_PATH = "log.txt";
     await handler(...generateHandlerArgs());
     expect(1).toEqual(1);
   });
