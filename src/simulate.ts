@@ -4,7 +4,7 @@ import { envValidators } from "./config";
 import envalid from "envalid";
 import { IotButtonClickType } from "./types";
 
-(async () => {
+const simulate = async () => {
   const { CLICK_TYPE } = envalid.cleanEnv(process.env, {
     ...envValidators,
     CLICK_TYPE: envalid.str({
@@ -23,4 +23,10 @@ import { IotButtonClickType } from "./types";
     ({} as any) as Context,
     null,
   );
-})();
+};
+
+if ((process.mainModule || ({} as any)).filename === __filename) {
+  simulate();
+}
+
+export default simulate;
