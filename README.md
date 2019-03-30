@@ -44,7 +44,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
     ## ≥ 2.14
 
     node --version
-    ## ≥ 10.0
+    ## ≥ 8.0
 
     yarn --version
     ## ≥ 1.10

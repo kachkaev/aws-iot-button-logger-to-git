@@ -1,0 +1,6 @@
+steps:
+  - template: ../steps/prepare-environment.yml
+  - template: ../steps/install-dependencies.yml
+  - script: yarn test
+    displayName: "Unit Tests"
+  - template: ../steps/report-test-results-and-coverage.yml

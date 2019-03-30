@@ -2,5 +2,7 @@
 .env
 build
 build.zip
+coverage
+junit.xml
 node_modules
 yarn-error.log

@@ -1,0 +1,52 @@
+trigger:
+  - master
+
+jobs:
+  - job: Linting
+    displayName: Linting
+    pool:
+      vmImage: "Ubuntu 16.04"
+    strategy:
+      matrix:
+        (Node 8):
+          NODE_VERSION: 8
+    steps:
+      - template: jobs/linting.yml
+
+  - job: Test_Linux
+    displayName: Unit tests on Linux
+    pool:
+      vmImage: "Ubuntu 16.04"
+    strategy:
+      matrix:
+        (Node 8):
+          NODE_VERSION: 8
+        (Node 10 + test results & coverage):
+          NODE_VERSION: 10
+          REPORT_TEST_RESULTS_AND_COVERAGE: true
+        (Node 11):
+          NODE_VERSION: 11
+    steps:
+      - template: jobs/unit-tests.yml
+
+  - job: Test_macOS
+    displayName: Unit tests on macOS
+    pool:
+      vmImage: macos-10.13
+    strategy:
+      matrix:
+        (Node 8):
+          NODE_VERSION: 8
+    steps:
+      - template: jobs/unit-tests.yml
+
+  - job: Test_Windows
+    displayName: Unit tests on Windows
+    pool:
+      vmImage: vs2017-win2016
+    strategy:
+      matrix:
+        (Node 8):
+          NODE_VERSION: 8
+    steps:
+      - template: jobs/unit-tests.yml
