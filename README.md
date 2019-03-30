@@ -1,6 +1,10 @@
 # AWS IoT Button logger to git
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Azure Pipelines status](https://img.shields.io/azure-devops/build/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1) [![Known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json) [![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Azure Pipelines status](https://img.shields.io/azure-devops/build/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1)
+[![Azure Pipelines coverage](https://img.shields.io/azure-devops/coverage/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1)
+[![Known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json)
+[![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
 
 > Work in progress
 
