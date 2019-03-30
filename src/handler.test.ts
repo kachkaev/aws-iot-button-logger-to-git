@@ -39,10 +39,10 @@ const createTemporaryRepository = async ({
       cwd: repositoryPath,
       env: {
         GIT_CONFIG_NOSYSTEM: "true",
-        GIT_COMMIT_AUTHOR_NAME: "Test",
-        GIT_COMMIT_AUTHOR_EMAIL: "test@example.com",
-        GIT_COMMIT_COMMITTER_NAME: "Test",
-        GIT_COMMIT_COMMITTER_EMAIL: "test@example.com",
+        GIT_AUTHOR_NAME: "Test",
+        GIT_AUTHOR_EMAIL: "test@example.com",
+        GIT_COMMITTER_NAME: "Test",
+        GIT_COMMITTER_EMAIL: "test@example.com",
         GIT_TERMINAL_PROMPT: "false",
       },
     });
@@ -90,18 +90,26 @@ describe("handler()", () => {
     expect(handler(...generateHandlerArgs())).rejects.toThrow();
   });
 
-  it("throws when file path is malicious", async () => {
-    process.env.GIT_REPO_URI =
-      "https://github.com/kachkaev/aws-iot-button-logger-to-git.git";
-    process.env.GIT_FILE_PATH = "~/.ssh/id_rsa";
-    expect(handler(...generateHandlerArgs())).rejects.toThrow();
-  });
-
   it("throws when credentials are not configured", async () => {
     process.env.GIT_REPO_URI =
       "https://github.com/kachkaev/aws-iot-button-logger-to-git.git";
     process.env.GIT_FILE_PATH = "clicks.txt";
     expect(handler(...generateHandlerArgs())).rejects.toThrow();
+  });
+
+  it("throws when file path is malicious", async () => {
+    const { repositoryPath } = await createTemporaryRepository({
+      filesByPath: {
+        "README.md": "hello world",
+      },
+    });
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "~/.ssh/id_rsa";
+    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
+    process.env.GIT_FILE_PATH = "/absolute/path";
+    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
+    process.env.GIT_FILE_PATH = "C:\\absolute\\path";
+    await expect(handler(...generateHandlerArgs())).rejects.toThrow();
   });
 
   it("throws for an empty repository (branch does not exist)", async () => {
