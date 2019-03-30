@@ -8,13 +8,13 @@ jobs:
       vmImage: "Ubuntu 16.04"
     strategy:
       matrix:
-        (Node 8):
-          NODE_VERSION: 8
+        (Node 10):
+          NODE_VERSION: 10
     steps:
       - template: jobs/linting.yml
 
-  - job: Test_Linux
-    displayName: Unit tests on Linux
+  - job: Test_Ubuntu
+    displayName: Unit tests on Ubuntu
     pool:
       vmImage: "Ubuntu 16.04"
     strategy:
@@ -35,8 +35,8 @@ jobs:
       vmImage: macos-10.13
     strategy:
       matrix:
-        (Node 8):
-          NODE_VERSION: 8
+        (Node 10):
+          NODE_VERSION: 10
     steps:
       - template: jobs/unit-tests.yml
 
@@ -46,7 +46,7 @@ jobs:
       vmImage: vs2017-win2016
     strategy:
       matrix:
-        (Node 8):
-          NODE_VERSION: 8
+        (Node 10):
+          NODE_VERSION: 10
     steps:
       - template: jobs/unit-tests.yml
