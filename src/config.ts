@@ -2,6 +2,14 @@ import envalid from "envalid";
 import { Config } from "./types";
 
 export const envValidators = {
+  EVENT_TIME_FORMAT: envalid.str({
+    desc: "Time format to use when logging events",
+    default: "yyyy-MM-dd hh:mm:ss ZZZ",
+  }),
+  EVENT_TIME_ZONE: envalid.str({
+    desc: "Time zone to use when logging events",
+    default: "UTC",
+  }),
   EVENT_LABEL_FOR_SINGLE_CLICK: envalid.str({
     desc: "Event label to log when the button is pressed once",
     default: "SINGLE",
@@ -17,14 +25,6 @@ export const envValidators = {
   EVENT_LINE_FORMAT: envalid.str({
     desc: "Line format to use (must include line ending)",
     default: "%TIME% %LABEL%\n",
-  }),
-  EVENT_TIME_FORMAT: envalid.str({
-    desc: "Time format to use when logging events",
-    default: "yyyy-MM-dd hh:mm:ss ZZZ",
-  }),
-  EVENT_TIME_ZONE: envalid.str({
-    desc: "Time zone to use when logging events",
-    default: "UTC",
   }),
 
   GIT_REPO_URI: envalid.str({
