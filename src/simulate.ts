@@ -35,6 +35,7 @@ const simulate = async () => {
 };
 
 if ((process.mainModule || ({} as any)).filename === __filename) {
+  /* istanbul ignore next */
   simulate();
 }
 

@@ -1,24 +1,42 @@
 import simulate from "./simulate";
-import { sanitizeEnv, restoreEnv } from "./testUtil";
+import {
+  sanitizeEnv,
+  restoreEnv,
+  createTemporaryRepository,
+  generateHandlerArgs,
+} from "./testUtil";
 
 describe("simulate()", () => {
-  beforeEach(sanitizeEnv);
-  afterEach(restoreEnv);
-
-  it("throws by default because env vars are not provided", async () => {
-    const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
-    const mockConsoleError = jest.spyOn(console, "error").mockImplementation();
-    const mockExit = jest
+  let mockConsoleLog: jest.Mock;
+  let mockConsoleError: jest.Mock;
+  let mockExit: jest.Mock<typeof process.exit>;
+  beforeEach(() => {
+    sanitizeEnv();
+    mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
+    mockConsoleError = jest.spyOn(console, "error").mockImplementation();
+    mockExit = jest
       .spyOn(process, "exit")
       .mockImplementation((code: number) => {
         throw new Error(`Early exit with code ${code}`);
       });
+  });
+  afterEach(() => {
+    restoreEnv();
+    jest.clearAllMocks();
+  });
 
+  it("throws by default because env vars are not provided", async () => {
     await expect(simulate()).rejects.toThrow("Early exit with code 1");
 
     expect(mockConsoleLog).not.toHaveBeenCalled();
     expect(mockConsoleError).toHaveBeenCalled();
     expect(mockExit).toHaveBeenCalledWith(1);
-    jest.clearAllMocks();
+  });
+
+  it("throws for an empty repository (branch does not exist)", async () => {
+    const { repositoryPath } = await createTemporaryRepository();
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "clicks.txt";
+    expect(simulate()).rejects.toThrow();
   });
 });
