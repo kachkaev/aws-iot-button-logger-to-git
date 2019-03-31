@@ -22,7 +22,7 @@ Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
 ## Configuration
 
-See [src/config.ts](src/config.ts) for the details on what is available.
+See [src/config.ts](src/config.ts) for the list of configurable options.
 
 ## Deployment
 

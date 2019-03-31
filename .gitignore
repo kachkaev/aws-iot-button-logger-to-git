@@ -1,8 +1,7 @@
 .cache
 .env
-build
-build.zip
 coverage
 junit.xml
+lambda.zip
 node_modules
 yarn-error.log
