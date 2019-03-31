@@ -21,10 +21,7 @@ export const appendToFileInRemoteGitRepository = async ({
   >;
   line: string;
 }) => {
-  const handlerDirectory = path.resolve(
-    os.tmpdir(),
-    `aws-iot-button-logger-to-git-${new Date().getTime()}`,
-  );
+  const handlerDirectory = generateUniqueTempDirPath("repository");
   const repositoryDirectory = path.resolve(handlerDirectory, `repository`);
   const resolvedGitFilePath = path.resolve(
     repositoryDirectory,
@@ -111,6 +108,14 @@ export const appendToFileInRemoteGitRepository = async ({
     await fs.remove(handlerDirectory);
   }
 };
+
+export const generateUniqueTempDirPath = (purpose: string) =>
+  path.resolve(
+    os.tmpdir(),
+    `aws-iot-button-logger-to-git-${purpose}-${new Date().getTime()}-${Math.round(
+      Math.random() * 1000000,
+    )}`,
+  );
 
 export const generateLine = ({
   config,

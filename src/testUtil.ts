@@ -1,9 +1,9 @@
 import { Context } from "aws-lambda";
 import execa from "execa";
 import fs from "fs-extra";
-import os from "os";
 import path from "path";
 import { IotButtonClickType, IotButtonClickEvent } from "./types";
+import { generateUniqueTempDirPath } from "./helpers";
 
 let defaultEnv: NodeJS.ProcessEnv = { ...process.env };
 export const sanitizeEnv = () => {
@@ -50,10 +50,7 @@ export const createTemporaryRepository = async ({
   repositoryPath: string;
   runGitCommand: (args: string[]) => Promise<void>;
 }> => {
-  const repositoryPath = path.resolve(
-    os.tmpdir(),
-    `test-repo-${new Date().getTime()}`,
-  );
+  const repositoryPath = generateUniqueTempDirPath("test-repository");
 
   await fs.mkdirp(repositoryPath);
 
