@@ -162,4 +162,29 @@ describe("handler()", () => {
     expect(lines[2]).toMatch(/^SINGLE,\d{10},\+0$/);
     expect(lines[3]).toMatch(/^$/);
   });
+
+  it("works even if no arguments are given", async () => {
+    const { repositoryPath } = await createTemporaryRepository({
+      filesByPath: {
+        "README.md": "hello world",
+      },
+    });
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "clicks.txt";
+    // @ts-ignore
+    await handler();
+  });
+
+  it("works with process.env.Path instead of process.env.PATH (can happen on Windows)", async () => {
+    const { repositoryPath } = await createTemporaryRepository({
+      filesByPath: {
+        "README.md": "hello world",
+      },
+    });
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "clicks.txt";
+    process.env.Path = process.env.PATH || process.env.Path;
+    delete process.env.PATH;
+    await handler(...generateHandlerArgs());
+  });
 });

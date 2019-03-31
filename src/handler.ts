@@ -5,7 +5,7 @@ import { appendToFileInRemoteGitRepository, generateLine } from "./helpers";
 
 export const handler: Handler<IotButtonClickEvent> = async (event) => {
   const config = getConfig({
-    useLocalDotEnv: event.useLocalDotEnv,
+    useLocalDotEnv: event ? event.useLocalDotEnv : false,
   });
 
   const line = generateLine({

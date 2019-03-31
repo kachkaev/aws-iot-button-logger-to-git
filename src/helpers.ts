@@ -38,11 +38,12 @@ export const appendToFileInRemoteGitRepository = async ({
   }
 
   try {
-    let commandPath = process.env.PATH || process.env.Path || process.env.path;
+    let commandPath = process.env.PATH || process.env.Path;
 
     // Ensure git binary is available inside AWS Lambda
-    // Also test this custom git binary when on Linux
-    if (process.env.AWS_LAMBDA_FUNCTION_NAME || os.type() === "Linux") {
+    // See https://github.com/pimterry/lambda-git for context
+    /* istanbul ignore if */
+    if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
       await require("lambda-git")({
         targetDirectory: handlerDirectory,
         updateEnv: false,
