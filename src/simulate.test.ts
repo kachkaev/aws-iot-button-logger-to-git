@@ -8,11 +8,13 @@ describe("simulate()", () => {
   it("throws by default because env vars are not provided", async () => {
     const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
     const mockConsoleError = jest.spyOn(console, "error").mockImplementation();
-    const mockExit = jest.spyOn(process, "exit").mockImplementation();
+    const mockExit = jest
+      .spyOn(process, "exit")
+      .mockImplementation((code: number) => {
+        throw new Error(`Early exit with code ${code}`);
+      });
 
-    await expect(simulate()).rejects.toThrow(
-      "Invalid env vars: GIT_REPO_URI,GIT_FILE_PATH",
-    );
+    await expect(simulate()).rejects.toThrow("Early exit with code 1");
 
     expect(mockConsoleLog).not.toHaveBeenCalled();
     expect(mockConsoleError).toHaveBeenCalled();
