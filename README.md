@@ -11,6 +11,8 @@ Doing so is useful when you want to record arbitrary infrequent events and then 
 
 The function can be triggered by any Lambda event, such as from [AWS 1-Click IoT devices](https://aws.amazon.com/iot-1-click/) or [Alexa Smart Home](https://developer.amazon.com/docs/smarthome/steps-to-build-a-smart-home-skill.html).
 
+![Process diagram: trigger (e.g. AWS IoT Button) starts this Lambda function and passes clickTypes. The function clones a git repository to obtain files, adds a line to a file, commits and pushes back to the repository](process-diagram.png)
+
 Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
 ```csv
@@ -29,7 +31,7 @@ Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 - Batteries in AWS IoT buttons last for ≈1,000–2,000 presses and are not officially replaceable.
   You can still use this Lambda function if you intend to log more events, just consider using other triggers (e.g. [Alexa Smart Home](https://developer.amazon.com/docs/smarthome/steps-to-build-a-smart-home-skill.html)).
 
-- The git repository you are writing to cannot be blank and requires to have at least one commit on the selected branch (`master` by default).
+- The git repository you are writing to cannot be blank and requires to have at least one commit on the branch of your choice (`master` by default).
 
 ## Configuration
 
