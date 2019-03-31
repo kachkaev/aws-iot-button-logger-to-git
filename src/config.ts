@@ -3,7 +3,8 @@ import { Config } from "./types";
 
 export const envValidators = {
   EVENT_TIME_FORMAT: envalid.str({
-    desc: "Time format to use when logging events",
+    desc:
+      "Time format to use when logging events. Available tokens can be found in https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens.",
     default: "yyyy-MM-dd hh:mm:ss ZZZ",
   }),
   EVENT_TIME_ZONE: envalid.str({
@@ -28,17 +29,19 @@ export const envValidators = {
   }),
 
   GIT_REPO_URI: envalid.str({
-    desc: "Git repository URI (must include authentication)",
+    desc:
+      "Git repository URI (must include authentication). HTTPS only, SSH is not supported.",
     example: "https://username:token@github.com/example/my-data.git",
   }),
   GIT_REPO_BRANCH: envalid.str({
-    desc: "Branch to change",
+    desc: "Branch to change (must exist before the ",
     default: "master",
   }),
 
   GIT_FILE_PATH: envalid.str({
-    desc: "Path to the log file inside the git repository",
-    example: "clicks.txt",
+    desc:
+      "Path to the log file inside the git repository. Make sure the path is not ignored via the .gitignore file.",
+    example: "path/to/clicks.txt",
   }),
 
   GIT_COMMIT_MESSAGE: envalid.str({
@@ -59,7 +62,7 @@ export const envValidators = {
   }),
 };
 
-export const getConfig = ({ useLocalDotEnv = false } = {}): Config => {
+export const getConfig = ({ useLocalDotEnv = false }): Config => {
   const config = envalid.cleanEnv(process.env, envValidators, {
     strict: true,
     ...(!useLocalDotEnv && { dotEnvPath: null }),

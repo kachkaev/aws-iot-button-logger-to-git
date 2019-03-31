@@ -6,10 +6,10 @@
 [![Known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json)
 [![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
 
-> Work in progress
-
 This repository contains a [Lambda function](https://aws.amazon.com/lambda/) that can be triggered by an [AWS IoT Button](https://aws.amazon.com/iotbutton/) to log clicks in a chosen git repository.
 Doing so is useful when you want to record arbitrary infrequent events and then analyze them.
+
+The function can be triggered by any Lambda event, such as from [AWS 1-Click IoT devices](https://aws.amazon.com/iot-1-click/).
 
 Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
@@ -20,26 +20,86 @@ Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 2019-02-15 09:10:24 +0000 SINGLE
 ```
 
+## Caveats
+
+- The repository cannot be blank and requires to have at least one commit on the branch that you are updating (`master` by default).
+
 ## Configuration
 
-See [src/config.ts](src/config.ts) for the list of configurable options.
+The function is configured via environment variables, which define the target repository as well as the format of the created log.
+See [src/config.ts](src/config.ts) for the list of options.
 
 ## Deployment
 
-### Using a pre-built version from GitHub
+###
 
-```
-aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://TODO.zip
-```
+1.  **Obtain the archive with the lambda function**
 
-### Using your own build
+    - _Using a pre-built version from GitHub_  
+      Simply download https://github.com/kachkaev/aws-iot-button-logger-to-git/releases/latest/download/lambda.zip
 
-```bash
-yarn install
-yarn build
+    - _Using your own build from source_
 
-aws lambda update-function-code --function-name aws-iot-button-logger-to-git --zip-file fileb://build.zip
-```
+      ```bash
+      git clone https://github.com/kachkaev/aws-iot-button-logger-to-git.git
+      cd aws-iot-button-logger-to-git
+
+      yarn install
+      yarn build
+
+      ## lambda.zip will appear in the project folder
+      ```
+
+1.  **Create a new Lambda function on AWS**  
+    See [official documentation](https://docs.aws.amazon.com/lambda/latest/dg/getting-started-create-function.htmls).
+    You should end up on the function’s configuration page at the end of this step.
+
+1.  **Upload function code and configure its execution**  
+    Press _Upload_ in the _Function code_ block and select a copy of `lambda.zip` on you computer.
+    Set _Runtime_ to _Node 8.10_ and _Basic settings_ → _Timeout_ to _15 sec_.
+
+1.  **Set environment variables**  
+    It is necessary to set at least two environment variables, otherwise the function will not succeed.
+    These are `GIT_REPO_URI` and `GIT_FILE_PATH`.
+
+    An example for `GIT_REPO_URI` would be `https://username:token@github.com/example/my-data.git`.
+    The value must use HTTPS protocol and contain username and token (SSH protocol is not supported).
+    Omitting `username` and `token` from the URL will make it impossible for the function to push the changes back to the source repository.
+    Token generation process will vary based on where your repository is hosted (e.g. see docs for [Github](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)).
+    Make sure you give your new token write permissions to the repository of your choice.
+
+    `GIT_FILE_PATH` must contain a relative path to the log file you want to populate, e.g. `path/to/clicks.txt`.
+    The file and the containing folder do not need to exist beforehand.
+
+    Although other environment variables are not required, there exist quite a few of them to let you customize what the function does.
+    For example, you can configure the format of the timestamps and bring your own labels.
+    So your output file can look like this:
+
+    ```bash
+    ## my-data.csv
+    2019/01/20,11:48:42,my custom event 1 (clicked)
+    2019/01/31,00:42:41,my custom event 2 (double-clicked)
+    2019/01/31,00:43:02,my custom event 3 (long-clicked)
+    2019/02/15,09:10:24,my custom event 1 (clicked)
+    ```
+
+
+    Details are in [src/config.ts](src/config.ts).
+
+1.  **Save the changes you’ve made to your function**  
+    Press _Save_ in the top right corner function’s page and wait for the zip archive to upload.
+    You can now run your function by pressing _Test_ next to _Save_.
+    Using this button for the first time will prompt you to configure a test event.
+    For example, you can name it `clickTypeDouble` and paste `{"clickType": "DOUBLE"}` into the event body.
+    Such payload will simulate a double-click.
+
+1.  **Link your IoT button or another AWS IoT device to the function**  
+    Follow the instructions for your device to link it with AWS.
+    You can start by clicking _Add Triggers_ → _AWS IoT_ section in the top-right corner of your function’s configuration page.
+
+1.  **Press the button and refresh you git repository in ≈10 seconds**
+
+1.  ## 🎉
 
 ## Development
 
@@ -49,7 +109,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
 
     ```bash
     git --version
-    ## ≥ 2.14
+    ## ≥ 2.3
 
     node --version
     ## ≥ 8.0
@@ -72,7 +132,7 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
     yarn install
     ```
 
-### Simulating the Lambda function locally
+### Simulating the function locally
 
 1.  Create a file called `.env` in the root of the project and define the configuration there:
 
@@ -81,17 +141,17 @@ aws lambda update-function-code --function-name aws-iot-button-logger-to-git --z
     GIT_FILE_PATH=clicks.txt
     ```
 
-    You can add a number of other configuration options, see [src/config.ts](src/config.ts) for a full list of what is available.
+    You can add a number of other configuration options; see [src/config.ts](src/config.ts) for a full list of what is available.
     In addition to those, you can also set `CLICK_TYPE` (= `SINGLE`, `DOUBLE`, `LONG`) to simulate different button click types.
 
-1.  Once `.env` file is configured, you can run the Lambda function simulation:
+1.  Once `.env` file is configured, you can trigger the function:
 
     ```bash
     yarn simulate
     ```
 
 Alternatively, you can define the configuration inline, which makes `.env` unnecessary.
-Please note that this trick will not work in cmd.exe and PowerShell on Windows.
+Please note that the below syntax will not work in cmd.exe and PowerShell on Windows.
 
 ```bash
 GIT_REPO_URI=https://username:token@github.com/example/my-data.git \
