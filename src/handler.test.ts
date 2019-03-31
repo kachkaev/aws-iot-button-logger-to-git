@@ -3,10 +3,10 @@ import os from "os";
 import path from "path";
 import { handler } from "./handler";
 import {
-  sanitizeEnv,
-  restoreEnv,
-  generateHandlerArgs,
   createTemporaryRepository,
+  generateHandlerArgs,
+  restoreEnv,
+  sanitizeEnv,
 } from "./testUtil";
 
 describe("handler()", () => {
@@ -114,13 +114,52 @@ describe("handler()", () => {
     await handler(...generateHandlerArgs("DOUBLE"));
     await handler(...generateHandlerArgs("LONG"));
     await handler(...generateHandlerArgs("SINGLE"));
+    process.env.EVENT_LABEL_FOR_SINGLE_CLICK = "A";
+    process.env.EVENT_LABEL_FOR_DOUBLE_CLICK = "B";
+    process.env.EVENT_LABEL_FOR_LONG_CLICK = "C";
+    await handler(...generateHandlerArgs("SINGLE"));
+    await handler(...generateHandlerArgs("DOUBLE"));
+    await handler(...generateHandlerArgs("LONG"));
     await runGitCommand(["checkout", "master"]);
-    const fileContents = await fs.readFile(
+    const lines = (await fs.readFile(
       path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
       "utf8",
+    )).split("\n");
+    expect(lines[0]).toMatch(/^[\d: -]+ \+0000 SINGLE$/);
+    expect(lines[1]).toMatch(/^[\d: -]+ \+0000 DOUBLE$/);
+    expect(lines[2]).toMatch(/^[\d: -]+ \+0000 LONG$/);
+    expect(lines[3]).toMatch(/^[\d: -]+ \+0000 SINGLE$/);
+    expect(lines[4]).toMatch(/^[\d: -]+ \+0000 A$/);
+    expect(lines[5]).toMatch(/^[\d: -]+ \+0000 B$/);
+    expect(lines[6]).toMatch(/^[\d: -]+ \+0000 C$/);
+    expect(lines[7]).toMatch(/^$/);
+  });
+
+  it("works for different time zones and formats", async () => {
+    const { repositoryPath, runGitCommand } = await createTemporaryRepository({
+      filesByPath: {
+        "README.md": "hello world",
+      },
+    });
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "clicks.txt";
+    process.env.EVENT_TIME_ZONE = "UTC+3";
+    await handler(...generateHandlerArgs());
+    process.env.EVENT_TIME_FORMAT = "X,Z";
+    process.env.EVENT_TIME_ZONE = "UTC";
+    await handler(...generateHandlerArgs());
+    process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\n";
+    await handler(...generateHandlerArgs());
+    await runGitCommand(["checkout", "master"]);
+    const lines = (await fs.readFile(
+      path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
+      "utf8",
+    )).split("\n");
+    expect(lines[0]).toMatch(
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0300 SINGLE$/,
     );
-    expect(fileContents).toMatch(
-      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 DOUBLE\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 LONG\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n$/,
-    );
+    expect(lines[1]).toMatch(/^\d{10},\+0 SINGLE$/);
+    expect(lines[2]).toMatch(/^SINGLE,\d{10},\+0$/);
+    expect(lines[3]).toMatch(/^$/);
   });
 });
