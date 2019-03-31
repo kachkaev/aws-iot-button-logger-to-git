@@ -69,9 +69,6 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_CONFIG_NOSYSTEM: "true",
           GIT_TERMINAL_PROMPT: "false",
           PATH: commandPath,
-          // https://en.wikipedia.org/wiki/COMSPEC
-          COMSPEC:
-            process.env.COMSPEC || process.env.ComSpec || process.env.comspec,
         },
         extendEnv: false,
       });
