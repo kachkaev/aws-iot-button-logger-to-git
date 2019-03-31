@@ -9,7 +9,7 @@
 This repository contains a [Lambda function](https://aws.amazon.com/lambda/) that can be triggered by an [AWS IoT Button](https://aws.amazon.com/iotbutton/) to log clicks in a chosen git repository.
 Doing so is useful when you want to record arbitrary infrequent events and then analyze them.
 
-The function can be triggered by any Lambda event, such as from [AWS 1-Click IoT devices](https://aws.amazon.com/iot-1-click/).
+The function can be triggered by any Lambda event, such as from [AWS 1-Click IoT devices](https://aws.amazon.com/iot-1-click/) or [Alexa Smart Home](https://developer.amazon.com/docs/smarthome/steps-to-build-a-smart-home-skill.html).
 
 Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
@@ -22,7 +22,14 @@ Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
 ## Caveats
 
-- The repository cannot be blank and requires to have at least one commit on the branch that you are updating (`master` by default).
+- Due to the nature of AWS Lambda and git, writing to a repository requires its shallow cloning on every function invocation.
+  The whole process takes a few seconds, which limits the frequency of events you can log.
+  If you trigger the function too often, git conflicts may emerge when pushing, so some events may fail to appear in your log file.
+
+- Batteries in AWS IoT buttons last for ≈1,000–2,000 presses and are not officially replaceable.
+  You can still use this Lambda function if you intend to log more events, just consider using other triggers (e.g. [Alexa Smart Home](https://developer.amazon.com/docs/smarthome/steps-to-build-a-smart-home-skill.html)).
+
+- The git repository you are writing to cannot be blank and requires to have at least one commit on the selected branch (`master` by default).
 
 ## Configuration
 
