@@ -1,7 +1,7 @@
 import { Handler } from "aws-lambda";
 import { IotButtonClickEvent } from "./types";
 import { getConfig } from "./config";
-import { appendToFileInRemoteGitRepository, generateLine } from "./util";
+import { appendToFileInRemoteGitRepository, generateLine } from "./helpers";
 
 export const handler: Handler<IotButtonClickEvent> = async (event) => {
   const config = getConfig({

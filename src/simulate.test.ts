@@ -1,10 +1,5 @@
 import simulate from "./simulate";
-import {
-  sanitizeEnv,
-  restoreEnv,
-  createTemporaryRepository,
-  generateHandlerArgs,
-} from "./testUtil";
+import { sanitizeEnv, restoreEnv, createTemporaryRepository } from "./testUtil";
 
 describe("simulate()", () => {
   let mockConsoleLog: jest.Mock;
