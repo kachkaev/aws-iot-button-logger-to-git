@@ -20,7 +20,7 @@ describe("build", () => {
     const zip = await JSZip.loadAsync(await fs.readFile(resultingArchive));
     expect(Object.keys(zip.files)).toEqual([
       "git-2.4.3.tar",
-      "handle.js",
+      "index.js",
       "LICENSE",
       "README.md",
     ]);

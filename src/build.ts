@@ -47,7 +47,7 @@ const build = async () => {
     },
   );
   zip.file(
-    "handle.js",
+    "index.js",
     fs.createReadStream(path.resolve(buildOutDir, "handler.js")),
   );
   zip.file(

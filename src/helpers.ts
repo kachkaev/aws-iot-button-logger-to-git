@@ -38,8 +38,7 @@ export const appendToFileInRemoteGitRepository = async ({
   }
 
   try {
-    let commandPath: string =
-      process.env.PATH || process.env.Path || process.env.path;
+    let commandPath = process.env.PATH || process.env.Path || process.env.path;
 
     // Ensure git binary is available inside AWS Lambda
     // Also test this custom git binary when on Linux
@@ -51,7 +50,7 @@ export const appendToFileInRemoteGitRepository = async ({
       commandPath = `${path.resolve(
         handlerDirectory,
         "usr/libexec/git-core",
-      )};${commandPath}`;
+      )}:${commandPath}`;
     }
 
     // Make git commands easier to run
@@ -76,7 +75,6 @@ export const appendToFileInRemoteGitRepository = async ({
       "clone",
       "--branch",
       config.GIT_REPO_BRANCH,
-      "--no-tags",
       "--depth",
       "1",
       config.GIT_REPO_URI,
