@@ -60,7 +60,7 @@ See [src/config.ts](src/config.ts) for the list of options.
       ```
 
 1.  **Create a new Lambda function on AWS**  
-    See [official documentation](https://docs.aws.amazon.com/lambda/latest/dg/getting-started-create-function.htmls).
+    See [official documentation](https://docs.aws.amazon.com/lambda/latest/dg/getting-started-create-function.html).
     You should end up on the function’s configuration page at the end of this step.
 
 1.  **Upload function code and configure its execution**  
