@@ -8,8 +8,8 @@
 
 > Work in progress
 
-This repository contains a [Lambda function](https://aws.amazon.com/lambda/) that can be triggered by an [AWS IoT Button](https://aws.amazon.com/iotbutton/) to log clicks to a chosen git repository.
-Doing so is useful when you want to record arbitrary infrequent events over a long period of time and then analyze them.
+This repository contains a [Lambda function](https://aws.amazon.com/lambda/) that can be triggered by an [AWS IoT Button](https://aws.amazon.com/iotbutton/) to log clicks in a chosen git repository.
+Doing so is useful when you want to record arbitrary infrequent events and then analyze them.
 
 Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 
