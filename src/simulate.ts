@@ -5,20 +5,29 @@ import envalid from "envalid";
 import { IotButtonClickType } from "./types";
 
 const simulate = async () => {
-  const { CLICK_TYPE } = envalid.cleanEnv(process.env, {
-    ...envValidators,
-    CLICK_TYPE: envalid.str({
-      desc: "Simulated click type",
-      choices: ["SINGLE", "DOUBLE", "LONG"],
-      default: "SINGLE",
-    }),
-  });
+  const useLocalDotEnv = process.env.NODE_ENV !== "test";
+
+  const { CLICK_TYPE } = envalid.cleanEnv(
+    process.env,
+    {
+      ...envValidators,
+      CLICK_TYPE: envalid.str({
+        desc: "Simulated click type",
+        choices: ["SINGLE", "DOUBLE", "LONG"],
+        default: "SINGLE",
+      }),
+    },
+    {
+      ...(!useLocalDotEnv && { dotEnvPath: null }),
+    },
+  );
 
   await handler(
     {
       serialNumber: "xxx",
       batteryVoltage: "xxmV",
       clickType: CLICK_TYPE as IotButtonClickType,
+      useLocalDotEnv,
     },
     ({} as any) as Context,
     null,

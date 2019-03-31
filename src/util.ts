@@ -40,8 +40,10 @@ export const appendToFileInRemoteGitRepository = async ({
     throw new Error("Provided GIT_FILE_PATH is outside the repository");
   }
 
-  let commandPath: string = process.env.PATH;
   try {
+    let commandPath: string =
+      process.env.PATH || process.env.Path || process.env.path;
+
     // Ensure git binary is available inside AWS Lambda
     // Also test this custom git binary when on Linux
     if (process.env.AWS_LAMBDA_FUNCTION_NAME || os.type() === "Linux") {
@@ -68,8 +70,8 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_TERMINAL_PROMPT: "false",
           PATH: commandPath,
           // https://en.wikipedia.org/wiki/COMSPEC
-          ComSpec:
-            process.env.ComSpec || process.env.COMSPEC || process.env.comspec,
+          COMSPEC:
+            process.env.COMSPEC || process.env.ComSpec || process.env.comspec,
         },
         extendEnv: false,
       });

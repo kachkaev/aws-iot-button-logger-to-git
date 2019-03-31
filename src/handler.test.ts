@@ -1,87 +1,17 @@
-import { handler } from "./handler";
-import { Context } from "aws-lambda";
-import { IotButtonClickType, IotButtonClickEvent } from "./types";
+import fs from "fs-extra";
 import os from "os";
 import path from "path";
-import execa from "execa";
-import fs from "fs-extra";
-
-const generateHandlerArgs = (clickType: IotButtonClickType = "SINGLE") =>
-  [
-    {
-      serialNumber: "xxx",
-      batteryVoltage: "xxmV",
-      clickType,
-    },
-    ({} as any) as Context,
-    null,
-  ] as [IotButtonClickEvent, Context, null];
-
-const createTemporaryRepository = async ({
-  filesByPath,
-  branch: branch = "master",
-}: {
-  filesByPath?: { [filePath: string]: string };
-  branch?: string;
-} = {}): Promise<{
-  repositoryPath: string;
-  runGitCommand: (args: string[]) => Promise<void>;
-}> => {
-  const repositoryPath = path.resolve(
-    os.tmpdir(),
-    `test-repo-${new Date().getTime()}`,
-  );
-
-  await fs.mkdirp(repositoryPath);
-
-  const runGitCommand = async (args: string[]) => {
-    await execa("git", args, {
-      cwd: repositoryPath,
-      env: {
-        GIT_CONFIG_NOSYSTEM: "true",
-        GIT_AUTHOR_NAME: "Test",
-        GIT_AUTHOR_EMAIL: "test@example.com",
-        GIT_COMMITTER_NAME: "Test",
-        GIT_COMMITTER_EMAIL: "test@example.com",
-        GIT_TERMINAL_PROMPT: "false",
-      },
-    });
-  };
-
-  await runGitCommand(["init"]);
-  await runGitCommand(["checkout", "-b", branch]);
-
-  if (filesByPath) {
-    Object.entries(filesByPath).forEach(([filePath, fileContents]) => {
-      const resolvedFilePath = path.resolve(repositoryPath, filePath);
-      fs.mkdirpSync(path.dirname(resolvedFilePath));
-      fs.writeFileSync(resolvedFilePath, fileContents);
-    });
-
-    await runGitCommand(["add", "--all"]);
-    await runGitCommand(["commit", "--message", "Initial commit"]);
-
-    // Make it possible to later push to the branch without setting receive.denyCurrentBranch=ignore
-    await runGitCommand(["checkout", "--orphan", "orphan-branch"]);
-    await runGitCommand(["rm", "-rf", "."]);
-  }
-
-  return {
-    repositoryPath,
-    runGitCommand,
-  };
-};
+import { handler } from "./handler";
+import {
+  sanitizeEnv,
+  restoreEnv,
+  generateHandlerArgs,
+  createTemporaryRepository,
+} from "./testUtil";
 
 describe("handler()", () => {
-  let initialEnv: NodeJS.ProcessEnv;
-  beforeEach(() => {
-    initialEnv = process.env;
-    process.env = { ...initialEnv };
-  });
-
-  afterEach(() => {
-    process.env = initialEnv;
-  });
+  beforeEach(sanitizeEnv);
+  afterEach(restoreEnv);
 
   it("throws by default because env vars are not provided", async () => {
     expect(handler(...generateHandlerArgs())).rejects.toThrow();

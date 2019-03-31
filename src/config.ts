@@ -62,7 +62,7 @@ export const envValidators = {
 export const getConfig = ({ useLocalDotEnv = false } = {}): Config => {
   const config = envalid.cleanEnv(process.env, envValidators, {
     strict: true,
-    ...(!useLocalDotEnv && { dotEnvPath: undefined }),
+    ...(!useLocalDotEnv && { dotEnvPath: null }),
     reporter: ({ errors }) => {
       const errorKeys = Object.keys(errors);
       if (!errorKeys.length) {

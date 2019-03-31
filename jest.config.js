@@ -5,7 +5,7 @@ const REPORT_TEST_RESULTS_AND_COVERAGE = !!process.env
 
 module.exports = {
   collectCoverage: REPORT_TEST_RESULTS_AND_COVERAGE,
-  collectCoverageFrom: ["src/**/*.ts", "!src/**/*.test.ts"],
+  collectCoverageFrom: ["src/**/*.ts", "!src/**/*.test.ts", "!src/testUtil.ts"],
   coverageReporters: ["cobertura", "html", "text"],
   reporters: REPORT_TEST_RESULTS_AND_COVERAGE
     ? ["default", ["jest-junit", { suiteNameTemplate: "{filepath}" }]]
