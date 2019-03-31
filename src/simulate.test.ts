@@ -5,7 +5,7 @@ import {
   createTemporaryRepository,
 } from "./testHelpers";
 
-describe("simulate()", () => {
+describe("simulate", () => {
   let mockConsoleLog: jest.Mock;
   let mockConsoleError: jest.Mock;
   let mockExit: jest.Mock<typeof process.exit>;

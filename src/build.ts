@@ -38,18 +38,6 @@ const build = async () => {
   // Produce ZIP archive with the handler and git binary
   const zip = new JSZip();
   zip.file(
-    "handle.js",
-    fs.createReadStream(path.resolve(buildOutDir, "handler.js")),
-  );
-  zip.file(
-    "README.md",
-    "# AWS IoT Button logger to git\n\nSee https://github.com/kachkaev/aws-iot-button-logger-to-git/\n",
-  );
-  zip.file(
-    "LICENSE",
-    fs.createReadStream(path.resolve(__dirname, "../LICENSE")),
-  );
-  zip.file(
     "git-2.4.3.tar",
     fs.createReadStream(
       path.resolve(__dirname, "../node_modules/lambda-git/git-2.4.3.tar"),
@@ -57,6 +45,18 @@ const build = async () => {
     {
       binary: true,
     },
+  );
+  zip.file(
+    "handle.js",
+    fs.createReadStream(path.resolve(buildOutDir, "handler.js")),
+  );
+  zip.file(
+    "LICENSE",
+    fs.createReadStream(path.resolve(__dirname, "../LICENSE")),
+  );
+  zip.file(
+    "README.md",
+    "# AWS IoT Button logger to git\n\nSee https://github.com/kachkaev/aws-iot-button-logger-to-git/\n",
   );
   const content = await zip.generateAsync({ type: "nodebuffer" });
 
