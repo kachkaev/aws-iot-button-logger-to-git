@@ -101,4 +101,26 @@ describe("handler()", () => {
       /^pre-existing content\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n$/,
     );
   });
+
+  it("works for different click types", async () => {
+    const { repositoryPath, runGitCommand } = await createTemporaryRepository({
+      filesByPath: {
+        "README.md": "hello world",
+      },
+    });
+    process.env.GIT_REPO_URI = repositoryPath;
+    process.env.GIT_FILE_PATH = "clicks.txt";
+    await handler(...generateHandlerArgs());
+    await handler(...generateHandlerArgs("DOUBLE"));
+    await handler(...generateHandlerArgs("LONG"));
+    await handler(...generateHandlerArgs("SINGLE"));
+    await runGitCommand(["checkout", "master"]);
+    const fileContents = await fs.readFile(
+      path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
+      "utf8",
+    );
+    expect(fileContents).toMatch(
+      /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 DOUBLE\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 LONG\n\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0000 SINGLE\n$/,
+    );
+  });
 });
