@@ -7,7 +7,7 @@ import {
   generateHandlerArgs,
   restoreEnv,
   sanitizeEnv,
-} from "./testUtil";
+} from "./testHelpers";
 
 describe("handler()", () => {
   beforeEach(sanitizeEnv);
