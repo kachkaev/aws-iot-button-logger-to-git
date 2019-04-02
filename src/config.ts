@@ -5,7 +5,7 @@ export const envValidators = {
   EVENT_TIME_FORMAT: envalid.str({
     desc:
       "Time format to use when logging events. Available tokens can be found in https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens.",
-    default: "yyyy-MM-dd hh:mm:ss ZZZ",
+    default: "yyyy-MM-dd HH:mm:ss ZZZ",
   }),
   EVENT_TIME_ZONE: envalid.str({
     desc: "Time zone to use when logging events",
