@@ -150,6 +150,10 @@ describe("handler()", () => {
     await handler(...generateHandlerArgs());
     process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\n";
     await handler(...generateHandlerArgs());
+    process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\\n";
+    await handler(...generateHandlerArgs());
+    process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\\r\\n";
+    await handler(...generateHandlerArgs());
     await runGitCommand(["checkout", "master"]);
     const lines = (await fs.readFile(
       path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
@@ -160,7 +164,9 @@ describe("handler()", () => {
     );
     expect(lines[1]).toMatch(/^\d{10},\+0 SINGLE$/);
     expect(lines[2]).toMatch(/^SINGLE,\d{10},\+0$/);
-    expect(lines[3]).toMatch(/^$/);
+    expect(lines[3]).toMatch(/^SINGLE,\d{10},\+0$/);
+    expect(lines[4]).toMatch(/^SINGLE,\d{10},\+0\r$/);
+    expect(lines[5]).toMatch(/^$/);
   });
 
   it("works even if no arguments are given", async () => {

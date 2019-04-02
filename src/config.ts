@@ -24,7 +24,8 @@ export const envValidators = {
     default: "LONG",
   }),
   EVENT_LINE_FORMAT: envalid.str({
-    desc: "Line format to use (must include line ending)",
+    desc:
+      "Line format to use (must include line ending). Unescaped \\n and \\r are converted to newline symbols.",
     default: "%TIME% %LABEL%\n",
   }),
 

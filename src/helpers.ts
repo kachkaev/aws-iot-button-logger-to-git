@@ -149,8 +149,10 @@ export const generateLine = ({
 
   // prettier-ignore
   const line = config.EVENT_LINE_FORMAT
-    .replace("%TIME%", time)
-    .replace("%LABEL%", label);
+    .replace(/%TIME%/g, time)
+    .replace(/%LABEL%/g, label)
+    .replace(/\\r/g, '\r')
+    .replace(/\\n/g, '\n');
 
   return line;
 };
