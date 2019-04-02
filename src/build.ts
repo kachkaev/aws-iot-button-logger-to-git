@@ -51,6 +51,10 @@ const build = async () => {
     fs.createReadStream(path.resolve(buildOutDir, "handler.js")),
   );
   zip.file(
+    "CHANGELOG.md",
+    fs.createReadStream(path.resolve(__dirname, "../CHANGELOG.md")),
+  );
+  zip.file(
     "LICENSE",
     fs.createReadStream(path.resolve(__dirname, "../LICENSE")),
   );

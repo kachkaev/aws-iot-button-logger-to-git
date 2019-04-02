@@ -21,6 +21,7 @@ describe("build", () => {
     expect(Object.keys(zip.files)).toEqual([
       "git-2.4.3.tar",
       "index.js",
+      "CHANGELOG.md",
       "LICENSE",
       "README.md",
     ]);
