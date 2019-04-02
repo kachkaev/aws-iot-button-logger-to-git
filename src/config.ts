@@ -5,10 +5,15 @@ export const envValidators = {
   EVENT_TIME_FORMAT: envalid.str({
     desc:
       "Time format to use when logging events. Available tokens can be found in https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens.",
+    docs:
+      "https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens",
     default: "yyyy-MM-dd HH:mm:ss ZZZ",
   }),
   EVENT_TIME_ZONE: envalid.str({
-    desc: "Time zone to use when logging events",
+    desc: "Time zone to use when logging events (IANA / fixed offset)",
+    docs:
+      "https://moment.github.io/luxon/docs/manual/zones.html#specifying-a-zone",
+    example: "Europe/London",
     default: "UTC",
   }),
   EVENT_LABEL_FOR_SINGLE_CLICK: envalid.str({
