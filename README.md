@@ -104,7 +104,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  **Link your IoT button or another AWS IoT device to the function**  
     Follow the instructions for your device to link it with AWS.
-    You can start by clicking _Add Triggers_ → _AWS IoT_ section in the top-right corner of your function’s configuration page.
+    You can start by clicking _Add Triggers_ → _AWS IoT_ section in the top-left corner of your function’s configuration page.
 
 1.  **Press the button and refresh you git repository in ≈10 seconds**
 
