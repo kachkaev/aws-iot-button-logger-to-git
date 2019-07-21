@@ -1,10 +1,6 @@
 {
-  "author": "Alexander Kachkaev <alexander@kachkaev.ru>",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.0.0",
-    "yarn": ">=1.10.0"
-  },
+  "author": "Alexander Kachkaev <alexander@kachkaev.ru>",
   "scripts": {
     "build": "ts-node src/build.ts",
     "fix": "yarn lint:prettier",
@@ -38,8 +34,13 @@
     "@types/parcel-bundler": "^1.12.0",
     "jest": "^24.5.0",
     "jest-junit": "^6.3.0",
-    "prettier": "^1.16.4",
+    "prettier": "^1.18.2",
+    "prettier-plugin-packagejson": "^2.0.1",
     "ts-node": "^8.0.3",
     "typescript": "^3.4.1"
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.10.0"
   }
 }
