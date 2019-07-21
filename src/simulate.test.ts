@@ -6,9 +6,9 @@ import {
 } from "./testHelpers";
 
 describe("simulate", () => {
-  let mockConsoleLog: jest.Mock;
-  let mockConsoleError: jest.Mock;
-  let mockExit: jest.Mock<typeof process.exit>;
+  let mockConsoleLog: jest.MockInstance<void, any[]>;
+  let mockConsoleError: jest.MockInstance<void, any[]>;
+  let mockExit: jest.MockInstance<void, any[]>;
   beforeEach(() => {
     sanitizeEnv();
     mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
