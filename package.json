@@ -19,7 +19,7 @@
     "jszip": "^3.2.2",
     "lambda-git": "^0.1.2",
     "luxon": "^1.19.3",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
