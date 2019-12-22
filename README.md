@@ -65,7 +65,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  **Upload function code and configure its execution**  
     Press _Upload_ in the _Function code_ block and select a copy of `lambda.zip` on you computer.
-    Set _Runtime_ to _Node 8.10_ and _Basic settings_ → _Timeout_ to _15 sec_.
+    Set _Runtime_ to _Node 12.x_ and _Basic settings_ → _Timeout_ to _15 sec_.
 
 1.  **Set environment variables**  
     It is necessary to set at least two environment variables, otherwise the function will not succeed.
@@ -121,10 +121,10 @@ See [src/config.ts](src/config.ts) for the list of options.
     ## ≥ 2.3
 
     node --version
-    ## ≥ 8.0
+    ## ≥ v10.18.0
 
     yarn --version
-    ## ≥ 1.10
+    ## ≥ 1.21.1
     ```
 
 1.  Clone the repository:
