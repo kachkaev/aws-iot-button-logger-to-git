@@ -121,10 +121,12 @@ describe("handler()", () => {
     await handler(...generateHandlerArgs("DOUBLE"));
     await handler(...generateHandlerArgs("LONG"));
     await runGitCommand(["checkout", "master"]);
-    const lines = (await fs.readFile(
-      path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
-      "utf8",
-    )).split("\n");
+    const lines = (
+      await fs.readFile(
+        path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
+        "utf8",
+      )
+    ).split("\n");
     expect(lines[0]).toMatch(/^[\d: -]+ \+0000 SINGLE$/);
     expect(lines[1]).toMatch(/^[\d: -]+ \+0000 DOUBLE$/);
     expect(lines[2]).toMatch(/^[\d: -]+ \+0000 LONG$/);
@@ -155,10 +157,12 @@ describe("handler()", () => {
     process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\\r\\n";
     await handler(...generateHandlerArgs());
     await runGitCommand(["checkout", "master"]);
-    const lines = (await fs.readFile(
-      path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
-      "utf8",
-    )).split("\n");
+    const lines = (
+      await fs.readFile(
+        path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
+        "utf8",
+      )
+    ).split("\n");
     expect(lines[0]).toMatch(
       /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d \+0300 SINGLE$/,
     );
