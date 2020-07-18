@@ -94,9 +94,7 @@ export const appendToFileInRemoteGitRepository = async ({
       "--no-sign",
       "--no-verify",
       "--date",
-      DateTime.utc()
-        .setZone(config.GIT_COMMIT_TIME_ZONE)
-        .toISO(),
+      DateTime.utc().setZone(config.GIT_COMMIT_TIME_ZONE).toISO(),
       "--message",
       config.GIT_COMMIT_MESSAGE,
     ]);
