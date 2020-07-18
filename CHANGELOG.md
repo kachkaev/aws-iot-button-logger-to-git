@@ -1,3 +1,11 @@
+## v1.0.4 (2020-07-18)
+
+- Upgrade dependencies to mitigate security vulnerabilities
+
+## v1.0.3 (2019-12-22)
+
+- Upgrade dependencies to mitigate security vulnerabilities
+
 ## v1.0.2 (2019-07-21)
 
 - Upgrade dependencies to mitigate security vulnerabilities (such as [lodash prototype pollution](https://snyk.io/vuln/SNYK-JS-LODASH-450202))
