@@ -40,22 +40,20 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 ## Deployment
 
-###
-
 1.  **Obtain the archive with the lambda function**
 
     - _Using a pre-built version from GitHub_  
-      Simply download https://github.com/kachkaev/aws-iot-button-logger-to-git/releases/latest/download/lambda.zip
+      Simply download <https://github.com/kachkaev/aws-iot-button-logger-to-git/releases/latest/download/lambda.zip>
 
     - _Using your own build from source_
 
-      ```bash
+      ```sh
       git clone https://github.com/kachkaev/aws-iot-button-logger-to-git.git
       cd aws-iot-button-logger-to-git
-
+      
       yarn install
       yarn build
-
+      
       ## lambda.zip will appear in the project folder
       ```
 
@@ -84,14 +82,13 @@ See [src/config.ts](src/config.ts) for the list of options.
     For example, you can configure the format of the timestamps and bring your own labels.
     So your output file can look like this:
 
-    ```bash
+    ```sh
     ## my-data.csv
     2019/01/20,11:48:42,my custom event 1 (clicked)
     2019/01/31,00:42:41,my custom event 2 (double-clicked)
     2019/01/31,00:43:02,my custom event 3 (long-clicked)
     2019/02/15,09:10:24,my custom event 1 (clicked)
     ```
-
 
     Details are in [src/config.ts](src/config.ts).
 
@@ -116,20 +113,20 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  Ensure you have the latest git, Node.js and Yarn installed:
 
-    ```bash
+    ```sh
     git --version
     ## ≥ 2.3
-
+    
     node --version
     ## ≥ v10.18.0
-
+    
     yarn --version
     ## ≥ 1.21.1
     ```
 
 1.  Clone the repository:
 
-    ```bash
+    ```sh
     cd PATH/TO/MISC/PROJECTS
     git clone https://github.com/kachkaev/aws-iot-button-logger-to-git.git
     cd aws-iot-button-logger-to-git
@@ -137,7 +134,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  Install dependencies using Yarn:
 
-    ```bash
+    ```sh
     yarn install
     ```
 
@@ -145,7 +142,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  Create a file called `.env` in the root of the project and define the configuration there:
 
-    ```bash
+    ```sh
     GIT_REPO_URI=https://username:token@github.com/example/my-data.git
     GIT_FILE_PATH=clicks.txt
     ```
@@ -155,31 +152,31 @@ See [src/config.ts](src/config.ts) for the list of options.
 
 1.  Once `.env` file is configured, you can trigger the function:
 
-    ```bash
+    ```sh
     yarn simulate
     ```
 
 Alternatively, you can define the configuration inline, which makes `.env` unnecessary.
 Please note that the below syntax will not work in cmd.exe and PowerShell on Windows.
 
-```bash
+```sh
 GIT_REPO_URI=https://username:token@github.com/example/my-data.git \
-GIT_FILE_PATH=clicks.txt \
-SOME_OTHER_OPTION=value \
-yarn simulate
+  GIT_FILE_PATH=clicks.txt \
+  SOME_OTHER_OPTION=value \
+  yarn simulate
 ```
 
 ### Quality checking
 
 1.  Ensure that there are no TypeScript errors and that the code is correctly formatted:
 
-    ```bash
+    ```sh
     yarn lint
     ```
 
 1.  Ensure that unit tests pass:
 
-    ```bash
+    ```sh
     yarn test
     ```
 

@@ -3,6 +3,7 @@ import { Context } from "aws-lambda";
 import { envValidators } from "./config";
 import envalid from "envalid";
 import { IotButtonClickType } from "./types";
+import { autoStartCommandIfNeeded } from "@kachkaev/commands";
 
 const simulate = async () => {
   const useLocalDotEnv = process.env.NODE_ENV !== "test";
@@ -34,9 +35,6 @@ const simulate = async () => {
   );
 };
 
-/* istanbul ignore if */
-if ((process.mainModule || ({} as any)).filename === __filename) {
-  simulate();
-}
+autoStartCommandIfNeeded(simulate, __filename);
 
 export default simulate;

@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import Bundler from "parcel-bundler";
 import path from "path";
 import JSZip from "jszip";
+import { autoStartCommandIfNeeded } from "@kachkaev/commands";
 
 import { generateUniqueTempDirPath } from "./helpers";
 
@@ -68,9 +69,6 @@ const build = async () => {
   await fs.writeFile(BUILD_OUTPUT, content);
 };
 
-/* istanbul ignore if */
-if ((process.mainModule || ({} as any)).filename === __filename) {
-  build();
-}
+autoStartCommandIfNeeded(build, __filename);
 
 export default build;
