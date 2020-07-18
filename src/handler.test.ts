@@ -9,6 +9,8 @@ import {
   sanitizeEnv,
 } from "./testHelpers";
 
+jest.setTimeout(30000);
+
 describe("handler()", () => {
   beforeEach(sanitizeEnv);
   afterEach(restoreEnv);
