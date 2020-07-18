@@ -1,8 +1,7 @@
 # AWS IoT Button logger to git
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Azure Pipelines status](https://img.shields.io/azure-devops/build/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1)
-[![Azure Pipelines coverage](https://img.shields.io/azure-devops/coverage/kachkaev/github-pipelines/1/master.svg)](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1)
+[![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/aws-iot-button-logger-to-git/Checks?label=checks)](https://github.com/kachkaev/aws-iot-button-logger-to-git/actions?query=workflow%3AChecks)
 [![Known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json)
 [![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
 
@@ -118,7 +117,7 @@ See [src/config.ts](src/config.ts) for the list of options.
     ## ≥ 2.3
     
     node --version
-    ## ≥ v10.18.0
+    ## ≥ v10.21.0
     
     yarn --version
     ## ≥ 1.21.1
@@ -180,4 +179,4 @@ GIT_REPO_URI=https://username:token@github.com/example/my-data.git \
     yarn test
     ```
 
-The repository is [continuously checked via Azure Pipelines](https://dev.azure.com/kachkaev/github-pipelines/_build?definitionId=1).
+The repository is [continuously checked via GitHub Actions](https://github.com/kachkaev/aws-iot-button-logger-to-git/actions).
