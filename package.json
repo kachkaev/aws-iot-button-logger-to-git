@@ -15,16 +15,18 @@
     "simulate": "ts-node src/simulate.ts",
     "test": "jest"
   },
+  "resolutions": {
+    "node-forge": ">=0.10.0"
+  },
   "dependencies": {
     "@kachkaev/commands": "^0.1.0",
-    "@types/jest": "^26.0.13",
+    "@types/jest": "^26.0.14",
     "envalid": "^6.0.2",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "jszip": "^3.5.0",
     "lambda-git": "^0.1.2",
-    "luxon": "^1.25.0",
-    "parcel-bundler": "^1.12.4"
+    "luxon": "^1.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -32,20 +34,21 @@
     "@babel/preset-typescript": "^7.10.4",
     "@kachkaev/markdownlint-config": "^0.1.0",
     "@kachkaev/prettier-config": "^1.0.0",
-    "@types/aws-lambda": "^8.10.62",
+    "@types/aws-lambda": "^8.10.63",
     "@types/fs-extra": "^9.0.1",
     "@types/jszip": "^3.4.1",
-    "@types/luxon": "^1.24.4",
-    "@types/node": "^14.6.4",
+    "@types/luxon": "^1.25.0",
+    "@types/node": "^14.11.2",
     "@types/parcel-bundler": "^1.12.1",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
     "markdownlint-cli": "^0.23.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.1.1",
-    "prettier-plugin-packagejson": "^2.2.5",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.2",
+    "prettier-plugin-packagejson": "^2.2.6",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
+    "typescript": "^4.0.3",
     "yarn-deduplicate": "^3.0.0"
   },
   "engines": {
