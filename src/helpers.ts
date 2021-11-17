@@ -40,20 +40,6 @@ export const appendToFileInRemoteGitRepository = async ({
   try {
     let commandPath = process.env.PATH || process.env.Path;
 
-    // Ensure git binary is available inside AWS Lambda
-    // See https://github.com/pimterry/lambda-git for context
-    /* istanbul ignore if */
-    if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
-      await require("lambda-git")({
-        targetDirectory: handlerDirectory,
-        updateEnv: false,
-      });
-      commandPath = `${path.resolve(
-        handlerDirectory,
-        "usr/libexec/git-core",
-      )}:${commandPath}`;
-    }
-
     // Make git commands easier to run
     const runGitCommand = async (args: string[]) => {
       await execa("git", args, {
@@ -65,6 +51,7 @@ export const appendToFileInRemoteGitRepository = async ({
           GIT_COMMITTER_EMAIL: config.GIT_COMMIT_USER_EMAIL,
           GIT_CONFIG_NOSYSTEM: "true",
           GIT_TERMINAL_PROMPT: "false",
+          LD_LIBRARY_PATH: process.env.LD_LIBRARY_PATH,
           PATH: commandPath,
         },
         extendEnv: false,

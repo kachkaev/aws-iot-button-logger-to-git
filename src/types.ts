@@ -23,6 +23,4 @@ export interface IotButtonClickEvent {
   batteryVoltage: string;
   clickType: IotButtonClickType;
   serialNumber: string;
-  /** Set to true when triggering the event handler locally */
-  useLocalDotEnv?: boolean;
 }

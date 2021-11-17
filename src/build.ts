@@ -1,52 +1,49 @@
-import envalid from "envalid";
+import * as envalid from "envalid";
 import fs from "fs-extra";
-import Bundler from "parcel-bundler";
+import Parcel from "@parcel/core";
 import path from "path";
 import JSZip from "jszip";
 import { autoStartCommandIfNeeded } from "@kachkaev/commands";
+import dotenv from "dotenv";
 
 import { generateUniqueTempDirPath } from "./helpers";
 
 const build = async () => {
-  const { BUILD_OUTPUT } = envalid.cleanEnv(
-    process.env,
-    {
-      BUILD_OUTPUT: envalid.str({
-        desc: "Location of the zip archive to produce",
-        default: "lambda.zip",
-      }),
-    },
-    {
-      ...(process.env.NODE_ENV === "test" && { dotEnvPath: null }),
-    },
-  );
+  if (process.env.NODE_ENV !== "test") {
+    dotenv.config();
+  }
+  const { BUILD_OUTPUT } = envalid.cleanEnv(process.env, {
+    BUILD_OUTPUT: envalid.str({
+      desc: "Location of the zip archive to produce",
+      default: "lambda.zip",
+    }),
+  });
 
   const buildOutDir = generateUniqueTempDirPath("build");
 
   // Produce compiled JavaScript handle
-  const bundler = new Bundler(path.resolve(__dirname, "handler.ts"), {
-    bundleNodeModules: true,
-    global: "handler",
-    logLevel: 1,
-    minify: true,
-    outDir: buildOutDir,
-    sourceMaps: false,
-    target: "node",
-    watch: false,
+  const bundler = new Parcel({
+    entries: path.resolve(__dirname, "handler.ts"),
+    logLevel: "error",
+    mode: "production",
+    defaultConfig: "@parcel/config-default",
+
+    targets: {
+      default: {
+        distDir: buildOutDir,
+        outputFormat: "commonjs",
+        optimize: true,
+        includeNodeModules: true,
+        engines: {
+          node: require("../package.json").engines.node,
+        },
+      },
+    },
   });
-  await bundler.bundle();
+  await bundler.run();
 
   // Produce ZIP archive with the handler and git binary
   const zip = new JSZip();
-  zip.file(
-    "git-2.4.3.tar",
-    fs.createReadStream(
-      path.resolve(__dirname, "../node_modules/lambda-git/git-2.4.3.tar"),
-    ),
-    {
-      binary: true,
-    },
-  );
   zip.file(
     "index.js",
     fs.createReadStream(path.resolve(buildOutDir, "handler.js")),

@@ -1,5 +1,5 @@
-.cache
 .env
+.parcel-cache
 coverage
 junit.xml
 lambda.zip

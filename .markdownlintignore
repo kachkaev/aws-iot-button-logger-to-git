@@ -4,8 +4,8 @@ LICENSE
 !*.md
 
 ## same as in .gitignore
-.cache
 .env
+.parcel-cache
 coverage
 junit.xml
 lambda.zip

@@ -19,7 +19,6 @@ describe("build", () => {
     expect(await fs.pathExists(resultingArchive)).toBe(true);
     const zip = await JSZip.loadAsync(await fs.readFile(resultingArchive));
     expect(Object.keys(zip.files)).toEqual([
-      "git-2.4.3.tar",
       "index.js",
       "CHANGELOG.md",
       "LICENSE",

@@ -1,4 +1,4 @@
-import envalid from "envalid";
+import * as envalid from "envalid";
 import { Config } from "./types";
 
 export const envValidators = {
@@ -68,16 +68,14 @@ export const envValidators = {
   }),
 };
 
-export const getConfig = ({ useLocalDotEnv = false }): Config => {
+export const getConfig = (): Config => {
   const config = envalid.cleanEnv(process.env, envValidators, {
-    strict: true,
-    ...(!useLocalDotEnv && { dotEnvPath: null }),
     reporter: ({ errors }) => {
       const errorKeys = Object.keys(errors);
       if (!errorKeys.length) {
         return;
       }
-      throw new Error("Invalid env vars: " + errorKeys);
+      throw new Error("Invalid env vars: " + errorKeys.join(", "));
     },
   });
 

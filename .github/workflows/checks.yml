@@ -19,7 +19,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 16
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -36,11 +36,11 @@ jobs:
         node: [12, 14, 16]
         exclude:
           - os: macos-latest
-            node: 14
+            node: 12
           - os: macos-latest
             node: 16
           - os: windows-latest
-            node: 14
+            node: 12
           - os: windows-latest
             node: 16
     steps:

@@ -60,9 +60,11 @@ See [src/config.ts](src/config.ts) for the list of options.
     See [official documentation](https://docs.aws.amazon.com/lambda/latest/dg/getting-started-create-function.html).
     You should end up on the function’s configuration page at the end of this step.
 
-1.  **Upload function code and configure its execution**  
-    Press _Upload_ in the _Function code_ block and select a copy of `lambda.zip` on you computer.
-    Set _Runtime_ to _Node 12.x_ and _Basic settings_ → _Timeout_ to _15 sec_.
+1.  **Upload function code and configure its execution**
+
+    - Press _Upload_ in the _Function code_ block and select a copy of `lambda.zip` on you computer.
+    - Set _Runtime_ to _Node 14.x_ and _Basic settings_ → _Timeout_ to _15 sec_.
+    - Press _Add a layer_ and provide ARN from [git-lambda-layer](https://github.com/lambci/git-lambda-layer) repo (e.g. `arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8` if your function is in `us-east-1` region and you want to use git `2.29.0`).
 
 1.  **Set environment variables**  
     It is necessary to set at least two environment variables, otherwise the function will not succeed.

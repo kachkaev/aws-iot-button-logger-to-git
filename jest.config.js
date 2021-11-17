@@ -14,4 +14,6 @@ module.exports = {
   reporters: REPORT_TEST_RESULTS_AND_COVERAGE
     ? ["default", ["jest-junit", { suiteNameTemplate: "{filepath}" }]]
     : ["default"],
+
+  transformIgnorePatterns: ["node_modules/(?!(weak-lru-cache|ordered-binary))"],
 };
