@@ -3,16 +3,13 @@ import { Config } from "./types";
 
 export const envValidators = {
   EVENT_TIME_FORMAT: envalid.str({
-    desc:
-      "Time format to use when logging events. Available tokens can be found in https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens.",
-    docs:
-      "https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens",
+    desc: "Time format to use when logging events. Available tokens can be found in https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens.",
+    docs: "https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens",
     default: "yyyy-MM-dd HH:mm:ss ZZZ",
   }),
   EVENT_TIME_ZONE: envalid.str({
     desc: "Time zone to use when logging events (IANA / fixed offset)",
-    docs:
-      "https://moment.github.io/luxon/docs/manual/zones.html#specifying-a-zone",
+    docs: "https://moment.github.io/luxon/docs/manual/zones.html#specifying-a-zone",
     example: "Europe/London",
     default: "UTC",
   }),
@@ -29,14 +26,12 @@ export const envValidators = {
     default: "LONG",
   }),
   EVENT_LINE_FORMAT: envalid.str({
-    desc:
-      "Line format to use (must include line ending). Unescaped \\n and \\r are converted to newline symbols.",
+    desc: "Line format to use (must include line ending). Unescaped \\n and \\r are converted to newline symbols.",
     default: "%TIME% %LABEL%\n",
   }),
 
   GIT_REPO_URI: envalid.str({
-    desc:
-      "Git repository URI (must include authentication). HTTPS only, SSH is not supported.",
+    desc: "Git repository URI (must include authentication). HTTPS only, SSH is not supported.",
     example: "https://username:token@github.com/example/my-data.git",
   }),
   GIT_REPO_BRANCH: envalid.str({
@@ -45,8 +40,7 @@ export const envValidators = {
   }),
 
   GIT_FILE_PATH: envalid.str({
-    desc:
-      "Path to the log file inside the git repository. Make sure the path is not ignored via the .gitignore file.",
+    desc: "Path to the log file inside the git repository. Make sure the path is not ignored via the .gitignore file.",
     example: "path/to/clicks.txt",
   }),
 

@@ -36,7 +36,7 @@ export const generateHandlerArgs = (clickType: IotButtonClickType = "SINGLE") =>
       batteryVoltage: "xxmV",
       clickType,
     },
-    ({} as any) as Context,
+    {} as Context,
     null,
   ] as [IotButtonClickEvent, Context, null];
 
