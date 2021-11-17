@@ -30,7 +30,7 @@ Example output (e.g. `clicks.txt` in `https://github.com/example/my-data.git`):
 - Batteries in AWS IoT buttons last for ≈1,000–2,000 presses and are not officially replaceable.
   You can still use this Lambda function if you intend to log more events, just consider using other triggers (e.g. [Alexa Smart Home](https://developer.amazon.com/docs/smarthome/steps-to-build-a-smart-home-skill.html)).
 
-- The git repository you are writing to cannot be blank and requires to have at least one commit on the branch of your choice (`master` by default).
+- The git repository you are writing to cannot be blank and requires to have at least one commit on the branch of your choice (`main` by default).
 
 ## Configuration
 

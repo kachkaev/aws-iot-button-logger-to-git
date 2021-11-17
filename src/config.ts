@@ -41,7 +41,7 @@ export const envValidators = {
   }),
   GIT_REPO_BRANCH: envalid.str({
     desc: "Branch to change (must exist before the ",
-    default: "master",
+    default: "main",
   }),
 
   GIT_FILE_PATH: envalid.str({

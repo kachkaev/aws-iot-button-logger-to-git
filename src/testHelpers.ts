@@ -42,7 +42,7 @@ export const generateHandlerArgs = (clickType: IotButtonClickType = "SINGLE") =>
 
 export const createTemporaryRepository = async ({
   filesByPath,
-  branch: branch = "master",
+  branch: branch = "main",
 }: {
   filesByPath?: { [filePath: string]: string };
   branch?: string;

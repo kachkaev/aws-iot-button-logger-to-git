@@ -73,7 +73,7 @@ describe("handler()", () => {
       process.env.GIT_REPO_URI = repositoryPath;
       process.env.GIT_FILE_PATH = filePath;
       await handler(...generateHandlerArgs());
-      await runGitCommand(["checkout", "master"]);
+      await runGitCommand(["checkout", "main"]);
       const fileContents = await fs.readFile(
         path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
         "utf8",
@@ -94,7 +94,7 @@ describe("handler()", () => {
     process.env.GIT_REPO_URI = repositoryPath;
     process.env.GIT_FILE_PATH = "clicks.txt";
     await handler(...generateHandlerArgs());
-    await runGitCommand(["checkout", "master"]);
+    await runGitCommand(["checkout", "main"]);
     const fileContents = await fs.readFile(
       path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
       "utf8",
@@ -122,7 +122,7 @@ describe("handler()", () => {
     await handler(...generateHandlerArgs("SINGLE"));
     await handler(...generateHandlerArgs("DOUBLE"));
     await handler(...generateHandlerArgs("LONG"));
-    await runGitCommand(["checkout", "master"]);
+    await runGitCommand(["checkout", "main"]);
     const lines = (
       await fs.readFile(
         path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
@@ -158,7 +158,7 @@ describe("handler()", () => {
     await handler(...generateHandlerArgs());
     process.env.EVENT_LINE_FORMAT = "%LABEL%,%TIME%\\r\\n";
     await handler(...generateHandlerArgs());
-    await runGitCommand(["checkout", "master"]);
+    await runGitCommand(["checkout", "main"]);
     const lines = (
       await fs.readFile(
         path.resolve(repositoryPath, process.env.GIT_FILE_PATH),
