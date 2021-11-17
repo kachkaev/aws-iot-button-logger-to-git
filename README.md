@@ -42,7 +42,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 1.  **Obtain the archive with the lambda function**
 
     - _Using a pre-built version from GitHub_  
-      Simply download <https://github.com/kachkaev/aws-iot-button-logger-to-git/releases/latest/download/lambda.zip>
+      Download <https://github.com/kachkaev/aws-iot-button-logger-to-git/releases/latest/download/lambda.zip>
 
     - _Using your own build from source_
 
@@ -64,7 +64,7 @@ See [src/config.ts](src/config.ts) for the list of options.
 
     - Press _Upload_ in the _Function code_ block and select a copy of `lambda.zip` on you computer.
     - Set _Runtime_ to _Node 14.x_ and _Basic settings_ → _Timeout_ to _15 sec_.
-    - Press _Add a layer_ and provide ARN from [git-lambda-layer](https://github.com/lambci/git-lambda-layer) repo (e.g. `arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8` if your function is in `us-east-1` region and you want to use git `2.29.0`).
+    - Press _Add a layer_ and provide ARN from [Git Lambda Layer](https://github.com/lambci/git-lambda-layer) repo (e.g. `arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8` if your function is in `us-east-1` region and you want to use git `2.29.0`).
 
 1.  **Set environment variables**  
     It is necessary to set at least two environment variables, otherwise the function will not succeed.
