@@ -58,7 +58,7 @@ const build = async () => {
   );
   zip.file(
     "README.md",
-    "# AWS IoT Button logger to git\n\nSee https://github.com/kachkaev/aws-iot-button-logger-to-git/\n",
+    "# AWS IoT Button logger to git\n\nSee https://github.com/kachkaev/aws-iot-button-logger-to-git\n",
   );
   const content = await zip.generateAsync({ type: "nodebuffer" });
 
