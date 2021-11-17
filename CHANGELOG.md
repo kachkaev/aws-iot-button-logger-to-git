@@ -1,3 +1,16 @@
+## v2.0.0 (2021-11-17)
+
+- **[Breaking]** Switch from [`lambda-git`](https://www.npmjs.com/package/lambda-git) to [Git Lambda Layer](https://github.com/lambci/git-lambda-layer).
+  The size of the artifact is significantly smaller and it contains no binaries.
+
+- **[Breaking]** Change default `GIT_REPO_BRANCH` from `master` to `main`.
+
+- **[Breaking]** Upgrade recommended Node runtime version from 12 to 14.
+  Node 12 should be still supported but Node 10 support is dropped.
+
+- Upgrade all dependencies, including Parcel v1 → v2.
+  This resolves a few dev-only dependency vulnerabilities reported by `yarn audit`.
+
 ## v1.0.4 (2020-07-18)
 
 - Upgrade dependencies to mitigate security vulnerabilities
