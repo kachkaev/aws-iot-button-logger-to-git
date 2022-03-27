@@ -1,6 +1,7 @@
 ## extensions
-*.*
-LICENSE
+*
+!*/
+
 !*.js
 !*.json
 !*.md
@@ -11,6 +12,7 @@ LICENSE
 !/.github/
 
 ## same as in .gitignore
+.DS_Store
 .env
 .parcel-cache
 coverage
