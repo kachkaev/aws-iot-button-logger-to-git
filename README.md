@@ -1,7 +1,7 @@
 # AWS IoT Button logger to git
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/aws-iot-button-logger-to-git/Checks?label=checks)](https://github.com/kachkaev/aws-iot-button-logger-to-git/actions?query=workflow%3AChecks)
+[![GitHub Workflow Status (checks)](https://img.shields.io/github/actions/workflow/status/kachkaev/aws-iot-button-logger-to-git/checks.yml?branch=main&label=checks)](https://github.com/kachkaev/aws-iot-button-logger-to-git/actions?query=workflow%3AChecks)
 [![Known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/kachkaev/aws-iot-button-logger-to-git.svg)](https://snyk.io/test/github/kachkaev/aws-iot-button-logger-to-git?targetFile=package.json)
 [![Code style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
 
